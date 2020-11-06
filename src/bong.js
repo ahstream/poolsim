@@ -5,7 +5,7 @@
 const log = require('./misc/log');
 const mods = require('./mods');
 const numRange = require('./numRange');
-const probEst = require('./probEst');
+const probRange = require('./probRange');
 const csvUtil = require('./misc/csvUtil');
 
 // EXPORTED FUNCTIONS -----------------------------------------------------------------------------
@@ -25,39 +25,32 @@ export function parseBong(bongSource) {
   bong.id = toNumber(bongSource.CouponId);
   bong.year = toNumber(bongSource.Year);
   bong.matchCount = toNumber(bongSource.MatchCount);
+
   bong.turnover = toNumber(bongSource.Turnover);
   bong.jackpot = toNumber(bongSource.Jackpot);
+
   bong.pot13R = toNumber(bongSource.Pot13R);
   bong.pot12R = toNumber(bongSource.Pot12R);
   bong.pot11R = toNumber(bongSource.Pot11R);
   bong.pot10R = toNumber(bongSource.Pot10R);
   bong.pot13RAlone = toNumber(bongSource.Pot13RAlone);
+
   bong.returnRate13R = toNumber(bongSource.ReturnRate13R);
   bong.returnRate12R = toNumber(bongSource.ReturnRate12R);
   bong.returnRate11R = toNumber(bongSource.ReturnRate11R);
   bong.returnRate10R = toNumber(bongSource.ReturnRate10R);
+
   bong.yield13RSrc = toNumber(bongSource.Yield13RSrc);
   bong.yield13RPlus1 = toNumber(bongSource.Yield13RPlus1);
   bong.yield12RPlus1 = toNumber(bongSource.Yield12RPlus1);
   bong.yield13RPlus1NoJackpot = toNumber(bongSource.Yield13RPlus1NoJackpot);
   bong.yield13RPlus1Avg = toNumber(bongSource.Yield13RPlus1Avg);
   bong.yield13RPlus1AvgNoJackpot = toNumber(bongSource.Yield13RPlus1AvgNoJackpot);
+
   bong.yield13R = toNumber(bongSource.Yield13R);
   bong.yield12R = toNumber(bongSource.Yield12R);
   bong.yield11R = toNumber(bongSource.Yield11R);
   bong.yield10R = toNumber(bongSource.Yield10R);
-  bong.poolProb13R = toNumber(bongSource.PoolProb13R);
-  bong.realProb13R = toNumber(bongSource.RealProb13R);
-  bong.estProb12R = toNumber(bongSource.EstProb12R);
-  bong.estProb11R = toNumber(bongSource.EstProb11R);
-  bong.estProb10R = toNumber(bongSource.EstProb10R);
-
-  bong.poolSum13R = toNumber(bongSource.PoolSum13R);
-  bong.realSum13R = toNumber(bongSource.RealSum13R);
-
-  bong.realEv = toNumber(bongSource.RealEv);
-  bong.estEv = toNumber(bongSource.EstEv);
-  bong.estEvType2 = toNumber(bongSource.EstEvType2);
 
   bong.book1 = toNumber(bongSource.Book1);
   bong.bookX = toNumber(bongSource.BookX);
@@ -71,16 +64,23 @@ export function parseBong(bongSource) {
   bong.numX = toNumber(bongSource.NumX);
   bong.num2 = toNumber(bongSource.Num2);
 
-  bong.bookProb = toNumber(bongSource.RealProb13R);
-  bong.prob = toNumber(bongSource.RealProb13R);
-
-  bong.bookEv = toNumber(bongSource.EstEv);
-
   bong.bookDifficulty = toNumber(bongSource.BookDifficulty);
   bong.poolDifficulty = toNumber(bongSource.PoolDifficulty);
 
   bong.poolHighOverplay = toNumber(bongSource.PoolHighOverplay);
   bong.poolHighOverplayTop3 = toNumber(bongSource.PoolHighOverplayTop3);
+
+  bong.prob = toNumber(bongSource.RealProb13R);
+
+  bong.realProb = toNumber(bongSource.RealProb13R);
+  bong.realSum = toNumber(bongSource.RealSum13R);
+  bong.realEv = toNumber(bongSource.RealEv);
+
+  bong.estProb = toNumber(bongSource.EstProb13R);
+  bong.estEv = toNumber(bongSource.EstEv);
+
+  bong.poolProb = toNumber(bongSource.PoolProb13R);
+  bong.poolSum = toNumber(bongSource.PoolSum13R);
 
   bong.isValid = true;
 
@@ -98,26 +98,22 @@ export function parseBong(bongSource) {
   bong.estNum1Range2 = [bong.estNum1 - 1, bong.estNum1];
   bong.estNum1Range3 = [bong.estNum1, bong.estNum1 + 1];
   bong.estNum1Range4 = [bong.estNum1 - 1, bong.estNum1, bong.estNum1 + 1];
+  bong.estNum1Range5 = [bong.estNum1 - 2, bong.estNum1 - 1, bong.estNum1, bong.estNum1 + 1];
+  bong.estNum1Range6 = [bong.estNum1 - 1, bong.estNum1, bong.estNum1 + 1, bong.estNum1 + 2];
 
   bong.estNumXRange1 = [bong.estNumX];
   bong.estNumXRange2 = [bong.estNumX - 1, bong.estNumX];
   bong.estNumXRange3 = [bong.estNumX, bong.estNumX + 1];
   bong.estNumXRange4 = [bong.estNumX - 1, bong.estNumX, bong.estNumX + 1];
+  bong.estNumXRange5 = [bong.estNumX - 2, bong.estNumX - 1, bong.estNumX, bong.estNumX + 1];
+  bong.estNumXRange6 = [bong.estNumX - 1, bong.estNumX, bong.estNumX + 1, bong.estNumX + 2];
 
   bong.estNum2Range1 = [bong.estNum2];
   bong.estNum2Range2 = [bong.estNum2 - 1, bong.estNum2];
   bong.estNum2Range3 = [bong.estNum2, bong.estNum2 + 1];
   bong.estNum2Range4 = [bong.estNum2 - 1, bong.estNum2, bong.estNum2 + 1];
-
-  bong.estNum1MultiRange1 = [bong.estNum1];
-  bong.estNumXMultiRange1 = [bong.estNumX];
-  bong.estNum2MultiRange1 = [13 - bong.estNum1 - bong.estNumX];
-
-  bong.minValProbEst25 = bong.prob * 0.75;
-  bong.maxValProbEst25 = bong.prob * 1.25;
-
-  bong.minValProbEst50 = bong.prob * 0.5;
-  bong.maxValProbEst50 = bong.prob * 1.5;
+  bong.estNum2Range5 = [bong.estNum2 - 2, bong.estNum2 - 1, bong.estNum2, bong.estNum2 + 1];
+  bong.estNum2Range6 = [bong.estNum2 - 1, bong.estNum2, bong.estNum2 + 1, bong.estNum2 + 2];
 
   if (!bong.isValid) {
     log.debug(`Bong ${bong.id} is invalid and will be skipped!`);
@@ -180,10 +176,10 @@ export function addRowStats(row, bong, bongStats, useNumRange = false) {
       win4: 0,
       win5: 0,
 
-      probSum: 0,
-      evSum: 0,
-      prob13R: bong.bookProb,
-      estEv13R: bong.estEv,
+      bongRealProb: bong.realProb,
+      bongEstProb: bong.estProb,
+      bongRealEv: bong.realEv,
+      bongEstEv: bong.estEv,
 
       // book1: bong.book1,
       // bookX: bong.bookX,
@@ -198,12 +194,15 @@ export function addRowStats(row, bong, bongStats, useNumRange = false) {
       bongPoolDifficulty: bong.poolDifficulty,
       bongPoolHighOverplay: bong.poolHighOverplay,
       bongPoolHighOverplayTop3: bong.poolHighOverplayTop3,
+
+      probSum: 0,
+      evSum: 0,
     };
 
     if (useNumRange) {
       numRange.setNumRangeForStat(newStats);
     }
-    probEst.setProbEstForStat(newStats);
+    probRange.setProbRangeForStat(newStats);
 
     mods.setKeys(row.prob, row.ev, newStats);
     mods.setProbMods(row.prob, newStats);
@@ -233,7 +232,7 @@ export function addRowStats(row, bong, bongStats, useNumRange = false) {
   if (useNumRange) {
     numRange.updateNumRangeForStat(row, stats);
   }
-  probEst.updateProbEstForStat(row, stats);
+  probRange.updateProbRangeForStat(row, stats);
 
   stats.rows++;
 }

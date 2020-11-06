@@ -27,6 +27,10 @@ export function isWithinBaseRangeMinMax(baseValue, value, minValue, maxValue) {
   return value >= minValue && value <= maxValue ? 1 : 0;
 }
 
+export function isValueWithinRangeByDiff(value, baseValue, diff) {
+  return baseValue >= value - diff && baseValue <= value + diff ? 1 : 0;
+}
+
 export function writeToDebugFile(data, filepath = 'debug.txt') {
   writeToDataFile(data, filepath);
 }

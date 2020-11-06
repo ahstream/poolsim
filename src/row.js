@@ -5,7 +5,7 @@
 const log = require('./misc/log');
 const util = require('./misc/util');
 const numRange = require('./numRange');
-const probEst = require('./probEst');
+const probRange = require('./probRange');
 const bongLib = require('./bong');
 
 // CONSTANTS -----------------------------------------------------------------------------
@@ -90,12 +90,12 @@ function createRow(bong, rowInput, useNumRange = false) {
   row.numX = countSign(2, rowInput); // 'X' is defined by number 2
   row.num2 = countSign(3, rowInput); // '2' is defined by number 3
 
-  row.bookProbPct = calcProduct(bong.book, rowOutcome);
+  row.probPct = calcProduct(bong.book, rowOutcome);
   row.poolProbPct = calcProduct(bong.pool, rowOutcome);
   // row.evProbPct = calcProduct(bong.ev, rowOutcome);
   // row.nvProbPct = calcProduct(bong.nv, rowOutcome);
 
-  row.bookProb = 1 / row.bookProbPct;
+  row.prob = 1 / row.probPct;
   row.poolProb = 1 / row.poolProbPct;
   // row.evProb = 1 / row.evProbPct;
   // row.nvProb = 1 / row.nvProbPct;
@@ -110,16 +110,16 @@ function createRow(bong, rowInput, useNumRange = false) {
   row.estYield11R = util.minOrNone(MIN_PAYOUT, bong.pot11R / (row.estNum11R + 1));
   row.estYield10R = util.minOrNone(MIN_PAYOUT, bong.pot10R / (row.estNum10R + 1));
 
-  row.prob = row.bookProb;
+  row.prob = row.prob;
 
   row.ev =
-    row.estYield13R * 1 * (1 / row.bookProb) +
-    row.estYield12R * 26 * (1 / row.bookProb) +
-    row.estYield11R * 312 * (1 / row.bookProb) +
-    row.estYield10R * 3432 * (1 / row.bookProb);
+    row.estYield13R * 1 * (1 / row.prob) +
+    row.estYield12R * 26 * (1 / row.prob) +
+    row.estYield11R * 312 * (1 / row.prob) +
+    row.estYield10R * 3432 * (1 / row.prob);
 
   setProfits(bong, row);
-  probEst.setProbEstForRow(bong, row);
+  probRange.setProbRangeForRow(bong, row);
 
   if (useNumRange) {
     numRange.setNumRangeForRow(bong, row);
