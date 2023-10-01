@@ -5,7 +5,6 @@
 const log = require('./misc/log');
 const mods = require('./mods');
 const numRange = require('./numRange');
-const probRange = require('./probRange');
 const csvUtil = require('./misc/csvUtil');
 
 // EXPORTED FUNCTIONS -----------------------------------------------------------------------------
@@ -202,7 +201,6 @@ export function addRowStats(row, bong, bongStats, useNumRange = false) {
     if (useNumRange) {
       numRange.setNumRangeForStat(newStats);
     }
-    probRange.setProbRangeForStat(newStats);
 
     mods.setKeys(row.prob, row.ev, newStats);
     mods.setProbMods(row.prob, newStats);
@@ -232,7 +230,6 @@ export function addRowStats(row, bong, bongStats, useNumRange = false) {
   if (useNumRange) {
     numRange.updateNumRangeForStat(row, stats);
   }
-  probRange.updateProbRangeForStat(row, stats);
 
   stats.rows++;
 }

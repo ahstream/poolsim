@@ -5,7 +5,6 @@
 const log = require('./misc/log');
 const util = require('./misc/util');
 const numRange = require('./numRange');
-const probRange = require('./probRange');
 const bongLib = require('./bong');
 
 // CONSTANTS -----------------------------------------------------------------------------
@@ -92,13 +91,9 @@ function createRow(bong, rowInput, useNumRange = false) {
 
   row.probPct = calcProduct(bong.book, rowOutcome);
   row.poolProbPct = calcProduct(bong.pool, rowOutcome);
-  // row.evProbPct = calcProduct(bong.ev, rowOutcome);
-  // row.nvProbPct = calcProduct(bong.nv, rowOutcome);
 
   row.prob = 1 / row.probPct;
   row.poolProb = 1 / row.poolProbPct;
-  // row.evProb = 1 / row.evProbPct;
-  // row.nvProb = 1 / row.nvProbPct;
 
   row.estNum13R = bong.turnover / row.poolProb;
   row.estNum12R = 26 * row.estNum13R;
@@ -119,7 +114,6 @@ function createRow(bong, rowInput, useNumRange = false) {
     row.estYield10R * 3432 * (1 / row.prob);
 
   setProfits(bong, row);
-  probRange.setProbRangeForRow(bong, row);
 
   if (useNumRange) {
     numRange.setNumRangeForRow(bong, row);
@@ -144,31 +138,6 @@ function createRowOutcome(rowInput) {
   rowOutcome.set(11, convertToSign(rowInput.m11));
   rowOutcome.set(12, convertToSign(rowInput.m12));
   rowOutcome.set(13, convertToSign(rowInput.m13));
-
-  /*
-  row.rowText =
-    rowOutcome.get(1) +
-    rowOutcome.get(2) +
-    rowOutcome.get(3) +
-    rowOutcome.get(4) +
-    rowOutcome.get(5) +
-    rowOutcome.get(6) +
-    rowOutcome.get(7) +
-    rowOutcome.get(8) +
-    rowOutcome.get(9) +
-    rowOutcome.get(10) +
-    rowOutcome.get(11) +
-    rowOutcome.get(12) +
-    rowOutcome.get(13);
-
-  row.num1 = row.rowText.split('1').length - 1;
-  row.numX = row.rowText.split('X').length - 1;
-  row.num2 = row.rowText.split('2').length - 1;
-  
-  row.num1 = countSign('1', rowOutcome);
-  row.numX = countSign('X', rowOutcome);
-  row.num2 = countSign('2', rowOutcome); 
-  */
 
   return rowOutcome;
 }

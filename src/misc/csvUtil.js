@@ -63,12 +63,6 @@ export function closeFileStream(stream) {
 
 exports.csvFileToJson = async (filepath, delimiter) => csvtojson({ delimiter }).fromFile(filepath);
 
-/*
-export async function csvFileToJson(filepath, delimiter) {
-  csvtojson({ delimiter }).fromFile(filepath);
-}
-*/
-
 export function syncWriteToCsvFile(data, filepath, delimiter) {
   try {
     const opts = { flatten: true, quote: '"', delimiter };

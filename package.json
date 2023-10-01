@@ -1,17 +1,12 @@
 {
-  "name": "poolsim",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
+  "name": "@ahstream/poolsim",
+  "version": "0.9.0",
+  "description": "Pool betting simulator",
+  "author": "hstream@gmail.com",
+  "license": "UNLICENSED",
   "scripts": {
-    "dev": "babel-node src/main.js",
-    "main": "babel-node src/main.js",
-    "profile": "set NODE_ENV=production && babel-node --prof src/dev.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "babel-node src/main.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "console-stamp": "^0.2.9",
     "csvtojson": "^2.0.10",

@@ -19,7 +19,6 @@ export function isWithinBaseRange(baseValue, value, withinPercent) {
   const minValue = baseValue * (1 - withinPercent);
   const maxValue = baseValue * (1 + withinPercent);
   const result = value >= minValue && value <= maxValue ? 1 : 0;
-  // console.log('value, baseValue, minValue, maxValue, result', value, baseValue, minValue, maxValue, result);
   return result;
 }
 
